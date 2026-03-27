@@ -1,12 +1,57 @@
 @import "tailwindcss";
-@import "./styles/tokens.css";
+
+@theme {
+    --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+}
+
+
+:root {
+  color-scheme: light dark;
+
+  /* Default: Cloud Dancer Light Palette */
+  --color-bg: #f0eee9;
+  --color-surface: #ffffff;
+  --color-elevated: #e5e2db;
+  --color-text: #141414;
+  --color-muted: #5e5e5e;
+  --color-border-strong: #d1d1d1;
+  --color-border-weak: #e5e5e5;
+  --color-accent: #316263; /* Teal for Light */
+}
+.dark {
+    --color-bg: #0b0d10;
+    --color-surface: #151a21;
+    --color-elevated: #1c232d;
+    --color-text: #f1f5f9;
+    --color-muted: #94a3b8;
+    --color-border-strong: #3b4b61;
+    --color-border-weak: #273140;
+    --color-accent: #40e0ff;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not(.light) {
+    /* Overwrite: Linear Dark Palette */
+    --color-bg: #0b0d10;
+    --color-surface: #151a21;
+    --color-elevated: #1c232d;
+    --color-text: #f1f5f9;
+    --color-muted: #94a3b8;
+    --color-border-strong: #3b4b61;
+    --color-border-weak: #273140;
+    --color-accent: #40e0ff; /* Electric Cyan for Dark */
+  }
+}
 
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 body {
-    background: var(--color-bg);
-    color: var(--color-text);
-    font-family: var(--font-mono);
+  background-color: var(--color-bg);
+  font-family: var(--font-sans);
+  color: var(--color-text);
+  transition: background-color 0.5s ease, color 0.3s ease;
+  margin: 0;
 }
