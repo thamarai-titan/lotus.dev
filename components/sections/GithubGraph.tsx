@@ -17,7 +17,7 @@ export const GithubGraph = () => {
       <h1 className="text-sm md:text-xl font-mono py-4">GitHub Contributions</h1>
 
       {/* Scrollable wrapper on mobile */}
-      <div className="border border-(--color-border-weak) rounded p-4 overflow-x-auto">
+      <div className="border border-(--color-border-weak) rounded p-4 overflow-x-auto w-full flex justify-center items-center">
         <div className="min-w-150">
           <GitHubCalendar
             username="thamarai-titan"

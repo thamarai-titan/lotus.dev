@@ -4,13 +4,14 @@ import { Menu, X } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
 import { useState } from "react"
 import { ThemeToggle } from "../ui/ThemeToggle"
+import Link from "next/link"
 
 
 const navItems = [
-  { label: "HOME",      num: "01" },
-  { label: "PROJECTS",  num: "02" },
-  { label: "SKILLS",   num: "03" },
-  { label: "ABOUT", num: "04" },
+  { label: "HOME",      num: "01" , link: "#hero"},
+  { label: "PROJECTS",  num: "02" , link: "#projects"},
+  { label: "SKILLS",   num: "03" , link: "#skills"},
+  { label: "CONTACT", num: "04" , link: "#contact"}
 ]
 
 
@@ -71,12 +72,12 @@ export const Nav = () => {
                   onClick={() => setIsOpen(false)}
                   className="group flex items-baseline gap-4 py-4 border-b border-(--color-border-strong) cursor-pointer hover:pl-3 transition-all duration-300"
                 >
-                  <span className="font-mono text-[10px] tracking-[1.5px] text-(--color-muted)">
+                  <span  className="font-mono text-[10px] tracking-[1.5px] text-(--color-muted)">
                     {item.num}
                   </span>
-                  <span className="font-syne text-5xl font-extrabold tracking-[-2px] text-(--color-text) group-hover:text-(--color-accent) transition-colors duration-200 leading-none">
+                  <Link href={item.link}  className="font-syne text-5xl font-extrabold tracking-[-2px] text-(--color-text) group-hover:text-(--color-accent) transition-colors duration-200 leading-none">
                     {item.label}
-                  </span>
+                  </Link>
                 </motion.li>
               ))}
             </ul>

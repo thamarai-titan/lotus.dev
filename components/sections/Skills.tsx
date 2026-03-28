@@ -33,7 +33,7 @@ const skillGroups: SkillGroup[] = [
 
 export const Skills = () => {
   return (
-    <section className="w-full py-16 font-mono px-2 md:px-20">
+    <section className="w-full py-16 font-mono px-2 md:px-20" id="skills">
 
       {/* Header */}
       <motion.div

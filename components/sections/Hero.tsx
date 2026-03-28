@@ -1,6 +1,7 @@
 "use client";
 import { ArrowRight, FileText, MapPin } from "lucide-react"
 import Image from "next/image"
+import Link from "next/link";
 
 export const Hero = () => {
     return (
@@ -58,10 +59,10 @@ export const Hero = () => {
                         <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
                     </button>
 
-                    <button className="flex items-center gap-2 px-3 py-2 rounded border border-(--color-border-strong) hover:bg-(--color-elevated) transition-colors font-mono text-sm text-(--color-muted) hover:border-(--color-border-strong)">
+                    <Link href={"https://drive.google.com/file/d/1Q7keXxD0cJWowtXh2tJWPC4m7g-PELEu/view?usp=sharing"} className="flex items-center gap-2 px-3 py-2 rounded border border-(--color-border-strong) hover:bg-(--color-elevated) transition-colors font-mono text-sm text-(--color-muted) hover:border-(--color-border-strong)">
                         <FileText size={18} />
                         Resume
-                    </button>
+                    </Link>
                 </div>
                 
             </div> 

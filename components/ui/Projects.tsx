@@ -23,7 +23,7 @@ const projects: Project[] = [
       "An AI-integrated car booking system that analyzes routes to recommend the most scenic and efficient travel experiences.",
     stack: ["Next.js", "TypeScript", "Node.js", "AI APIs"],
     status: "live",
-    github: "https://github.com/thamarai-titan",
+    github: "https://github.com/thamarai-titan/EasyRide",
     live: "#",
   },
   {
@@ -34,7 +34,7 @@ const projects: Project[] = [
       "Engineered a platform featuring 320+ developer tools across 12 categories with advanced search, filtering, and real-time trending insights.",
     stack: ["Next.js", "TypeScript", "Tailwind CSS"],
     status: "live",
-    github: "https://github.com/thamarai-titan",
+    github: "https://github.com/thamarai-titan/DevBin",
     live: "#",
   },
   {
@@ -45,7 +45,7 @@ const projects: Project[] = [
       "Developed a scalable chat application with AI integration for Catch up with updates in the Groups",
     stack: ["Node.js", "Express", "PostgreSQL", "JWT"],
     status: "live",
-    github: "https://github.com/thamarai-titan",
+    github: "https://github.com/thamarai-titan/openchat",
     live: "#",
   },
   {
@@ -56,7 +56,7 @@ const projects: Project[] = [
       "Designed and built a README generator that uses AI to create professional documentation based on user input and project details.",
     stack: ["Next.js", "Framer Motion", "Tailwind CSS"],
     status: "wip",
-    github: "https://github.com/thamarai-titan",
+    github: "https://github.com/thamarai-titan/ReadmeForge",
   },
 ];
 
