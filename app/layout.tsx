@@ -18,9 +18,37 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 
+
 export const metadata: Metadata = {
-  title: "Portfolio",
-  description: "ilotus.dev a Personal Portfolio",
+  title: "Thamarai | Full Stack Developer",
+  description: "Building modern web apps with Next.js, AI, and scalable systems.",
+
+  openGraph: {
+    title: "Thamarai Portfolio",
+    description: "Explore my projects, skills, and developer journey.",
+    url: "https://ilotus.dev",
+    siteName: "ilotus.dev",
+    images: [
+      {
+        url: "image.png", // IMPORTANT
+        width: 1200,
+        height: 630,
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+
+  twitter: {
+    card: "summary_large_image",
+    title: "Thamarai Portfolio",
+    description: "Full Stack Developer Portfolio",
+    images: ["/image.png"],
+  },
+
+  icons: {
+    icon: "/favicon.ico",
+  },
 };
 
 export default function RootLayout({
