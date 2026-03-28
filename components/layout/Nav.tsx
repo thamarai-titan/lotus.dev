@@ -1,9 +1,10 @@
 "use client"
 
 import { Menu, X } from "lucide-react"
-import { motion, AnimatePresence } from "motion/react"
+import { motion, AnimatePresence } from "framer-motion"
 import { useState } from "react"
 import { ThemeToggle } from "../ui/ThemeToggle"
+
 
 const navItems = [
   { label: "HOME",      num: "01" },
@@ -25,7 +26,7 @@ export const Nav = () => {
                 </div>
                 <div className="flex items-center justify-between gap-4">
                     <div>
-                        <ThemeToggle/>
+                        <ThemeToggle />
                     </div>
                     <motion.button 
                     transition={{ duration: 0.2 }}
