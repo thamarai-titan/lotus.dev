@@ -55,3 +55,14 @@ body {
   transition: background-color 0.5s ease, color 0.3s ease;
   margin: 0;
 }
+
+.bg-pattern {
+  background-image: repeating-linear-gradient(
+    135deg,
+    rgba(255,255,255,0.04) 1px,
+    rgba(255,255,255,0.04) 3px,
+    transparent 0px,
+    transparent 8px
+  );
+  mask-image: linear-gradient(to bottom, black 10%, black 100%, transparent);
+}
