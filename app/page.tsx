@@ -1,6 +1,9 @@
 import { Nav } from "@/components/layout/Nav";
 import { GithubGraph } from "@/components/sections/GithubGraph";
 import { Hero } from "@/components/sections/Hero";
+import { Skills } from "@/components/sections/Skills";
+import { Divider } from "@/components/ui/Divider";
+import { Projects } from "@/components/ui/Projects";
 
 export default function Home() {
   return (
@@ -11,17 +14,16 @@ export default function Home() {
         <div className="absolute left-0 top-0 h-full w-0 md:w-12 border-r-2 border-l-2 border-(--color-border-strong)/10 bg-pattern"></div>
          <div className="absolute right-0 top-0 h-full w-0 md:w-12 border-l-2 border-r-2 border-(--color-border-strong)/10 bg-pattern"></div>
         <Nav/>
-        <div
-        className="w-screen h-px"
-        style={{ background: "var(--color-border-strong)", opacity: 0.2 }}
-      />
+        <Divider/>
         <Hero/>
-        <div
-        className="w-screen h-px"
-        style={{ background: "var(--color-border-strong)", opacity: 0.2 }}
-      />
+        <Divider/>
       <GithubGraph/>
+      <Divider/>
+      <Projects/>
+      <Divider/>
+      <Skills />
       </div>
+      
     </main>
   );
 }

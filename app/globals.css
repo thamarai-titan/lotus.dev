@@ -5,6 +5,9 @@
   --font-mono: var(--font-geist-mono), ui-monospace, monospace;
 }
 
+html {
+  scroll-behavior: smooth;
+}
 
 :root {
   color-scheme: light dark;
@@ -15,8 +18,8 @@
   --color-elevated: #e5e2db;
   --color-text: #141414;
   --color-muted: #5e5e5e;
-  --color-border-strong: #d1d1d1;
-  --color-border-weak: #e5e5e5;
+  --color-border-weak:   #c8c4bc;   /* was #e5e5e5 — now actually visible */
+  --color-border-strong: #a8a39a;   /* was #d1d1d1 — clear but not harsh */
   --color-accent: #316263; /* Teal for Light */
 }
 .dark {
@@ -64,5 +67,5 @@ body {
     transparent 0px,
     transparent 8px
   );
-  mask-image: linear-gradient(to bottom, black 10%, black 100%, transparent);
+  mask-image: linear-gradient(to bottom, transparent , black 10%, black 100%, transparent);
 }
