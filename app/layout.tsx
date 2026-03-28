@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     siteName: "ilotus.dev",
     images: [
       {
-        url: "image.png", // IMPORTANT
+        url: "https://ilotus.dev/image.png", // IMPORTANT
         width: 1200,
         height: 630,
       },
@@ -43,11 +43,11 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Thamarai Portfolio",
     description: "Full Stack Developer Portfolio",
-    images: ["/image.png"],
+    images: ["https://ilotus.dev/image.png"],
   },
 
   icons: {
-    icon: "/favicon.ico",
+    icon: "https://ilotus.dev/favicon.ico",
   },
 };
 
