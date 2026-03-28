@@ -1,3 +1,4 @@
+import { Contact } from "@/components/layout/Contact";
 import { Nav } from "@/components/layout/Nav";
 import { GithubGraph } from "@/components/sections/GithubGraph";
 import { Hero } from "@/components/sections/Hero";
@@ -22,6 +23,8 @@ export default function Home() {
       <Projects/>
       <Divider/>
       <Skills />
+      <Divider />
+      <Contact />
       </div>
       
     </main>
