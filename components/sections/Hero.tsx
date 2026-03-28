@@ -32,7 +32,7 @@ export const Hero = () => {
                 </div>
 
                 {/* Bio Description */}
-                <p className="mt-5 text-sm md:text-base text-(--color-muted) max-w-xl leading-relaxed">
+                <p className="mt-5 text-sm md:text-base text-(--color-muted) max-w-xl leading-relaxed font-mono">
                     <span className="text-(--color-text) font-mono">Still learning. Always building.</span> Each project teaches me something a tutorial never could — about scale, about failure, about craft.
                 </p>
 
