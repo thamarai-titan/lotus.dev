@@ -131,7 +131,7 @@ export const Contact = () => {
                 </div>
                 <ArrowUpRight
                   size={14}
-                  className="opacity-0 group-hover:opacity-100 transition-opacity group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"
+                  className="opacity-0 group-hover:opacity-100 transition-opacity group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
                   style={{ color: "var(--color-muted)" }}
                 />
               </motion.a>
