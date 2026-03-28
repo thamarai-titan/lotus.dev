@@ -1,16 +1,20 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Providers } from "./providers";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter, JetBrains_Mono } from "next/font/google";
 
-const geist = Geist({
+// Configure the Sans font
+const inter = Inter({
   subsets: ["latin"],
-  variable: "--font-geist-sans",
+  variable: "--font-inter", // CSS variable name
+  display: "swap",
 });
 
-const mono = Geist_Mono({
+// Configure the Mono font
+const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
-  variable: "--font-geist-mono",
+  variable: "--font-mono", // CSS variable name
+  display: "swap",
 });
 
 
@@ -26,7 +30,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en"
-    className={`${geist.variable} ${mono.variable}`}
+    className={`${inter.variable} ${jetbrainsMono.variable}`}
     suppressHydrationWarning>
       <body suppressHydrationWarning>
         <Providers>
