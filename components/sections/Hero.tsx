@@ -14,12 +14,13 @@ export const Hero = () => {
                     fill
                     className="object-cover"
                     priority
+                    sizes="(max-width: 768px) 100vw, 50vw"
                 />
             </div>
 
             {/* Content Container: Centered text on mobile, Left-aligned on Desktop */}
             <div className="flex flex-col items-center md:items-start text-left">
-                
+
                 {/* Name and Location */}
                 <div className="space-y-1">
                     <h1 className="text-2xl md:text-3xl font-mono text-(--color-text)">
@@ -47,12 +48,12 @@ export const Hero = () => {
 
                 {/* Action Buttons */}
                 <div className="flex flex-wrap items-center justify-center md:justify-start gap-4 mt-8 w-full">
-                    <button 
+                    <button
                         onClick={() => {
-    document.getElementById("projects")?.scrollIntoView({
-      behavior: "smooth",
-    });
-  }}
+                            document.getElementById("projects")?.scrollIntoView({
+                                behavior: "smooth",
+                            });
+                        }}
                         className="group flex items-center gap-2 bg-(--color-accent) text-(--color-surface) px-3 py-2 rounded font-mono transition-transform hover:scale-105 active:scale-95 text-sm"
                     >
                         view projects
@@ -64,9 +65,9 @@ export const Hero = () => {
                         Resume
                     </Link>
                 </div>
-                
-            </div> 
-             
+
+            </div>
+
         </section>
     )
 }

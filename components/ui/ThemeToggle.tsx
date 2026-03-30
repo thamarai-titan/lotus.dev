@@ -15,7 +15,7 @@ export const ThemeToggle = () => {
   return (
     <button
       onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-      className="p-2 rounded-lg border border-(--color-border-strong) hover:border-(--color-accent) transition-all"
+      className="p-2 rounded-full border border-(--color-border-strong) hover:border-(--color-accent) transition-all"
     >
       {theme === "dark" ? <Sun/> : <Moon/>}
     </button>

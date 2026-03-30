@@ -32,7 +32,7 @@ export const Nav = () => {
                     <motion.button 
                     transition={{ duration: 0.2 }}
                     onClick={() => setIsOpen(true)}
-                    className="border border-(--color-border-strong) p-2 rounded-lg hover:border-(--color-accent) transition-all">
+                    className="border border-(--color-border-strong) p-2 rounded hover:border-(--color-accent) transition-all">
                         <Menu className="text-(--color-text)"/>
                     </motion.button>
                 </div>
