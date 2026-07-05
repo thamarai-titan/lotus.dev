@@ -1,32 +1,18 @@
-import { Contact } from "@/components/layout/Contact";
-import { Nav } from "@/components/layout/Nav";
-import { GithubGraph } from "@/components/sections/GithubGraph";
-import { Hero } from "@/components/sections/Hero";
-import { Skills } from "@/components/sections/Skills";
-import { Divider } from "@/components/ui/Divider";
-import { Projects } from "@/components/ui/Projects";
+import { Header } from "@/components/view/(landing)/Header";
+import { Projects } from "@/components/view/(landing)/Projects";
+import { Links } from "@/components/view/(landing)/Links";
 
-export default function Home() {
+export default function Page() {
   return (
-    <main className="relative w-full min-h-screen flex flex-col items-center justify-start gap-12 px-8">
-        
+    <main className="flex min-h-screen justify-center p-6 md:p-16">
+      <div className="w-full max-w-[640px] space-y-8">
+        <Header />
 
-      <div className="relative w-full max-w-7xl flex flex-col items-center justify-center px-0">
-        <div className="absolute left-0 top-0 h-full w-0 md:w-12 border-r-2 border-l-2 border-(--color-border-strong)/10 bg-pattern"></div>
-         <div className="absolute right-0 top-0 h-full w-0 md:w-12 border-l-2 border-r-2 border-(--color-border-strong)/10 bg-pattern"></div>
-        <Nav/>
-        <Divider/>
-        <Hero/>
-        <Divider/>
-      <GithubGraph/>
-      <Divider/>
-      <Projects/>
-      <Divider/>
-      <Skills />
-      <Divider />
-      <Contact />
+        <div className="flex flex-col gap-6">
+          <Projects />
+        </div>
+        <Links />
       </div>
-      
     </main>
   );
 }
