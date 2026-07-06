@@ -13,6 +13,8 @@
     "@tailwindcss/postcss": "^4.3.2",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "gray-matter": "^4.0.3",
+    "marked": "^18.0.5",
     "next": "16.1.6",
     "postcss": "^8.5.16",
     "react": "19.2.3",
