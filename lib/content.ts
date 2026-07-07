@@ -25,11 +25,11 @@ export function getSortedPostsData(contentType: "blogs" | "logs"): PostData[] {
   const allPostsData = fileNames
     .filter((fileName) => fileName.endsWith(".md") || fileName.endsWith(".mdx"))
     .map((fileName) => {
-      const slug = fileName.replace(/\.mdx?$/, "");
+      const slug = fileName.replace(/\.mdx?$/, "").trim();
       const fullPath = path.join(dirPath, fileName);
       const fileContents = fs.readFileSync(fullPath, "utf8");
       const { data, content } = matter(fileContents);
-      
+
       // Calculate reading time
       const wordsCount = content.split(/\s+/g).length;
       const readingTime = `${Math.max(1, Math.ceil(wordsCount / 200))} min read`;
@@ -56,17 +56,27 @@ export function getSortedPostsData(contentType: "blogs" | "logs"): PostData[] {
   });
 }
 
-export async function getPostData(contentType: "blogs" | "logs", slug: string): Promise<PostData | null> {
+export async function getPostData(
+  contentType: "blogs" | "logs",
+  slug: string,
+): Promise<PostData | null> {
+  const decodedSlug = decodeURIComponent(slug).trim();
   const dirPath = path.join(contentDirectory, contentType);
-  // Try .mdx first, then .md
-  let fullPath = path.join(dirPath, `${slug}.mdx`);
-  if (!fs.existsSync(fullPath)) {
-    fullPath = path.join(dirPath, `${slug}.md`);
-  }
-  if (!fs.existsSync(fullPath)) {
+  if (!fs.existsSync(dirPath)) {
     return null;
   }
 
+  const fileNames = fs.readdirSync(dirPath);
+  const matchedFile = fileNames.find((fileName) => {
+    const fileSlug = fileName.replace(/\.mdx?$/, "").trim();
+    return fileSlug.toLowerCase() === decodedSlug.toLowerCase();
+  });
+
+  if (!matchedFile) {
+    return null;
+  }
+
+  const fullPath = path.join(dirPath, matchedFile);
   const fileContents = fs.readFileSync(fullPath, "utf8");
   const { data, content } = matter(fileContents);
 
