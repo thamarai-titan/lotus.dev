@@ -4,19 +4,19 @@ import { IconArrowUpRight } from "@tabler/icons-react";
 const LINK_DATA = [
   {
     name: "X",
-    url: "https://x.com",
+    url: "https://x.com/Thamarai_Titan",
   },
   {
     name: "LinkedIn",
-    url: "https://linkedin.com",
+    url: "https://www.linkedin.com/in/thamarai-manalan-919384279/",
   },
   {
     name: "GitHub",
-    url: "https://github.com",
+    url: "https://github.com/thamarai-titan",
   },
   {
     name: "Mail",
-    url: "mailto:hello@example.com",
+    url: "mailto:tmanalan710@gmail.com",
   },
 ];
 

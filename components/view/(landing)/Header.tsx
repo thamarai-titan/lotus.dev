@@ -22,7 +22,7 @@ export function Header() {
               Thamarai Manalan
             </h1>
             <p className="text-base text-muted-foreground font-medium">
-              Software Engineer
+              Software Engineer - Intern
             </p>
           </div>
         </div>
