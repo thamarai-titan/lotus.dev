@@ -1,0 +1,493 @@
+---
+title: "How I Learned to Understand a Frontend Codebase"
+date: "2026-08-18"
+description: "A practical reflection on how I learned to analyze a Next.js frontend codebase, understand technology choices, work with AI-generated code, and think beyond the tech stack when building software."
+---
+
+---
+
+When I first started working as an intern, one of the things that confused me the most was looking at an existing frontend codebase and thinking:
+
+**"Why is there so much code for something that looks so simple?"**
+
+I would see Next.js, TanStack Query, Zod, React Hook Form, Motion, Zustand, API layers, custom hooks, components, services, utilities, and many other abstractions.
+
+At first, it was easy to think:
+
+> "Is all of this really necessary? Is this code written by engineers, or is most of it AI-generated?"
+
+Over time, I realized that this was the wrong question to start with.
+
+The better question is:
+
+**"What problem is each part of this codebase trying to solve?"**
+
+### Understanding Why a Stack Exists
+
+I worked in a startup where the team was already familiar with technologies such as Node.js and React.
+
+That naturally influenced the technology choices for the product.
+
+When a team already knows a particular ecosystem, choosing the same ecosystem for another part of the product can make development faster. Engineers already understand the language, debugging tools, deployment process, libraries, patterns, and common problems.
+
+So the stack wasn't necessarily chosen because it was the "best stack in the world."
+
+It was chosen because it was **familiar, productive, and good enough for the problem being solved.**
+
+That distinction changed how I looked at technology.
+
+Instead of asking:
+
+**"Why did they choose Next.js?"**
+
+I started asking:
+
+**"What does Next.js make easier for this application?"**
+
+Instead of asking:
+
+**"Why are they using TanStack Query?"**
+
+I started asking:
+
+**"What problem does TanStack Query solve that we would otherwise have to solve ourselves?"**
+
+That way of thinking became much more useful.
+
+### Looking at the Problem Behind the Package
+
+When I started exploring the technologies used in the codebase, I noticed something interesting.
+
+Most popular libraries aren't simply there because developers like adding packages to `package.json`.
+
+They usually exist because developers repeatedly encounter a problem.
+
+For example, when making API calls manually, we might have to manage:
+
+- Loading states
+- Error states
+- Successful responses
+- Caching
+- Refetching
+- Synchronizing server state
+- Request deduplication
+- Stale data
+- Retry behavior
+
+TanStack Query exists largely around these kinds of problems.
+
+Once I understood that, the library stopped looking like "extra complexity."
+
+It became:
+
+**"Someone already solved a problem that I would otherwise have to solve myself."**
+
+The same idea applies to the other technologies in the stack.
+
+### Next.js
+
+React gives us the foundation for building interfaces, but an application needs much more than components.
+
+Routing, rendering strategies, server-side capabilities, project structure, optimization, and other application-level concerns need to be handled somewhere.
+
+Next.js provides a framework around React that solves many of those problems.
+
+The important thing isn't simply knowing that Next.js exists.
+
+It's understanding **why a team benefits from using a framework instead of building all of those pieces themselves.**
+
+### TanStack Query
+
+TanStack Query helps manage server state.
+
+Instead of manually writing API calls and handling every loading, error, caching, refetching, and synchronization concern, we can use a standardized approach.
+
+The benefit isn't that the library makes the API request itself.
+
+The benefit is that it removes a lot of repetitive application code around the request.
+
+### Zod
+
+When data enters our application, we shouldn't automatically assume that it has the shape we expect.
+
+Zod gives us a way to describe and validate data structures.
+
+This becomes particularly useful when dealing with forms, API responses, user input, and other boundaries where data can be incorrect.
+
+### React Hook Form
+
+Forms look simple until they become complicated.
+
+Once we have multiple fields, validation, errors, touched states, submission states, dynamic fields, and performance concerns, managing everything manually becomes repetitive.
+
+React Hook Form provides abstractions around those problems.
+
+Again, the important lesson isn't:
+
+**"Use React Hook Form because everyone uses it."**
+
+It's:
+
+**"Understand what problem React Hook Form is solving before deciding whether you need it."**
+
+### Motion
+
+Animations are another example.
+
+We could manually manage CSS classes, transitions, element states, mounting and unmounting behavior, and animation timing.
+
+Motion provides a more expressive way to describe UI animations and interactions.
+
+The library is not the important part.
+
+The problem it solves is.
+
+---
+
+## The Pattern I Started Seeing
+
+Eventually, I started seeing a pattern across the entire codebase.
+
+A technology stack is basically a collection of **solutions to recurring engineering problems.**
+
+You can think about it like this:
+
+**Problem → Solution → Abstraction → Productivity**
+
+For example:
+
+**Managing server state → TanStack Query → reusable server-state abstraction → faster development**
+
+**Complex forms → React Hook Form → form-management abstraction → less repetitive code**
+
+**Input validation → Zod → schema-based validation → safer data handling**
+
+**UI framework requirements → Next.js → application framework → faster application development**
+
+Once I started looking at technologies this way, the codebase became much easier to understand.
+
+---
+
+## Then AI Changed the Situation
+
+Later, I started using AI much more heavily while developing.
+
+At some point, I realized that a large portion of the code I was working with had been generated or heavily assisted by AI.
+
+That created another interesting problem.
+
+AI can generate code extremely quickly.
+
+But generating code and understanding code are completely different skills.
+
+I could ask AI to create a TanStack Query hook, a Zod schema, a React Hook Form component, or a Motion animation.
+
+It could produce something that looked correct.
+
+But that didn't necessarily mean the code belonged in the application.
+
+AI doesn't automatically understand all of the architectural decisions, business rules, existing conventions, edge cases, or future requirements of a codebase.
+
+This is where human engineering judgment becomes important.
+
+### AI Can Generate Code
+
+But engineers decide:
+
+- What problem should be solved?
+- What architecture should be used?
+- Where should the code live?
+- Which abstraction makes sense?
+- How much abstraction is actually necessary?
+- What should be reusable?
+- What should remain simple?
+- What happens when something fails?
+- Does the implementation match the existing system?
+- Is this actually solving the user's problem?
+
+AI can help answer these questions, but blindly accepting its output doesn't remove the responsibility from the engineer.
+
+---
+
+## The 80% AI Problem
+
+After working with AI-generated code for a while, I started thinking about something else.
+
+If I build an application and AI writes 80% of the code, what do I actually understand?
+
+If I only know the basic React concepts and ask AI to connect everything together, I might end up with a working application that I cannot properly explain.
+
+That becomes especially dangerous when the application grows.
+
+At some point, something will break.
+
+The AI might suggest a solution that technically works but doesn't match the architecture.
+
+Or it might introduce another abstraction to fix a problem created by the previous abstraction.
+
+Eventually, the code can become complicated without anyone really understanding why it became complicated.
+
+That's why I think the goal shouldn't be:
+
+**"How much code can AI write for me?"**
+
+It should be:
+
+**"How much of the system do I understand well enough to make good decisions?"**
+
+---
+
+## What I Learned From Looking at the Codebase
+
+This changed how I approach an unfamiliar project.
+
+Instead of opening a file and immediately trying to understand every line, I try to understand the system from a higher level first.
+
+I ask:
+
+### 1. What problem does this application solve?
+
+Before understanding the code, understand the product.
+
+Who uses it?
+
+What are they trying to accomplish?
+
+What are the important workflows?
+
+### 2. What are the major parts of the application?
+
+For a typical frontend, I might identify:
+
+- Routing
+- Authentication
+- API layer
+- Server-state management
+- Client-state management
+- Forms
+- Validation
+- UI components
+- Animations
+- Error handling
+- Shared utilities
+
+Then I can understand how these parts communicate.
+
+### 3. Why does each technology exist?
+
+Instead of memorizing libraries, I try to connect each library to the problem it solves.
+
+That gives me a much stronger understanding than simply knowing the syntax.
+
+### 4. How does data move through the application?
+
+For example:
+
+**User interaction → Form → Validation → Mutation → API → Backend → Response → Cache/state → UI**
+
+Once I understand this flow, individual files become much easier to understand.
+
+### 5. What conventions does the team follow?
+
+Every codebase has its own way of doing things.
+
+Maybe API calls belong inside service files.
+
+Maybe TanStack Query hooks are separated from API functions.
+
+Maybe forms have a specific folder structure.
+
+Maybe components are split into feature-specific and shared components.
+
+Understanding these conventions is important because software development isn't just about writing code that works.
+
+It is also about writing code that belongs in that particular system.
+
+---
+
+# Building My Own Projects Changed My Thinking
+
+This also made me rethink how I want to build my own projects.
+
+Earlier, I might have started with:
+
+**"I want to build something using Next.js, PostgreSQL, Docker, Redis, and some AI API."**
+
+Now I think that is backwards.
+
+I want to start with:
+
+**"What problem am I trying to solve?"**
+
+Then:
+
+**"Who has this problem?"**
+
+Then:
+
+**"Is solving it actually useful?"**
+
+Then:
+
+**"What is the simplest system I can build to solve it?"**
+
+Only after that should I start choosing technologies.
+
+---
+
+## The Problem Should Come First
+
+Suppose I build a personal tracker.
+
+I shouldn't build it simply because I want to use Next.js and TanStack Query.
+
+I should be able to explain:
+
+> "I kept forgetting things I needed to do and wanted a single place to track my activities, tasks, and progress. So I decided to build a personal tracker that solves that problem."
+
+Now the project has a reason to exist.
+
+If someone asks me during an interview:
+
+**"Why did you build this?"**
+
+I have an actual answer.
+
+Not:
+
+> "Because I wanted to learn Next.js."
+
+But:
+
+> "I had a problem, I identified a possible solution, and I built the product while using the project to learn the technologies required to implement it."
+
+That is a much stronger way to think about projects.
+
+---
+
+# The Tech Stack Is Not the Product
+
+Another important lesson I learned is that the technology stack itself doesn't make a project valuable.
+
+Using Next.js doesn't automatically make a project good.
+
+Using microservices doesn't automatically make it scalable.
+
+Using Docker doesn't automatically make the architecture better.
+
+Using AI doesn't automatically make the product intelligent.
+
+Using a complicated stack doesn't automatically make a developer more experienced.
+
+Technology is a tool.
+
+The value comes from **how and why the tools are combined to solve a real problem.**
+
+Sometimes the correct solution might require a complex architecture.
+
+Sometimes it might just require a simple application with a database and a few API endpoints.
+
+The engineering decision should come from the problem, not from the desire to use a particular technology.
+
+---
+
+# What I Would Ask Myself Before Building Something
+
+Now, before starting a project, I want to keep a few questions in mind:
+
+1. **What problem am I actually solving?**
+2. **Who experiences this problem?**
+3. **Why is solving it useful?**
+4. **What is the simplest solution I can build first?**
+5. **What technologies do I actually need?**
+6. **Why am I choosing each technology?**
+7. **What trade-offs am I making?**
+8. **How will the different parts of the system communicate?**
+9. **What happens when something fails?**
+10. **Do I understand the code well enough to explain and modify it myself?**
+
+These questions are probably more valuable than simply memorizing another framework.
+
+---
+
+## Becoming Comfortable With a Codebase
+
+I used to think that becoming good at a technology meant knowing every feature of that technology.
+
+Now I think it is more about being able to enter an unfamiliar codebase and gradually build a mental model of it.
+
+You don't need to understand every file on day one.
+
+You need to understand:
+
+**What problem does the application solve?**
+
+↓
+
+**What are its major features?**
+
+↓
+
+**How is the application structured?**
+
+↓
+
+**How does data move through the system?**
+
+↓
+
+**What problems are the libraries solving?**
+
+↓
+
+**Why did the engineers choose these abstractions?**
+
+↓
+
+**Where can I safely make changes?**
+
+Once you can answer those questions, a large codebase stops looking like thousands of unrelated lines of code.
+
+It starts looking like a collection of decisions made to solve particular problems.
+
+---
+
+# Final Thought
+
+The biggest thing I learned as an intern wasn't a particular Next.js feature, TanStack Query API, Zod schema, or animation technique.
+
+It was learning **how to think about software.**
+
+When I see a complicated codebase now, I try not to immediately ask:
+
+**"Why is there so much code?"**
+
+I ask:
+
+**"What problems are all these pieces trying to solve?"**
+
+When I use a new library, I don't want to only learn its API.
+
+I want to understand:
+
+**"What problem was this library created to solve, and what would I have to build if it didn't exist?"**
+
+And when I build my own projects, I don't want the technology stack to be the reason the project exists.
+
+I want the problem to come first.
+
+Then the solution.
+
+Then the architecture.
+
+Then the technologies that help me implement that solution efficiently.
+
+AI can help me write the code.
+
+Frameworks can help me build faster.
+
+Libraries can solve repetitive engineering problems.
+
+But understanding **why the system exists, why the decisions were made, and whether those decisions actually solve the problem** is still something I need to learn as an engineer.
+
+I hope this way of looking at codebases and projects is useful to someone else who is also trying to move from simply **writing code** to actually **understanding software engineering**.
