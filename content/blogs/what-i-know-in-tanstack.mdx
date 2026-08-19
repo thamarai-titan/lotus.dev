@@ -1,0 +1,436 @@
+---
+title: "Understanding TanStack Query: Stale Data, Mutations, and Cache"
+date: "2026-08-19"
+description: "A practical understanding of TanStack Query, server state, caching, stale data, mutations, and query invalidation."
+---
+
+---
+
+When I started working with **TanStack Query**, I initially saw it as a convenient way to make API calls from the frontend.
+
+After spending more time with it, I realized that API calls are only a small part of what TanStack Query is designed to solve.
+
+The bigger problem is **managing server state inside a frontend application**.
+
+The backend is the source of truth for application data, while the frontend keeps a representation of that data so it can display it to users. Once we have that separation, several problems appear. The frontend needs to know when data is fresh, when it has become outdated, when it should be fetched again, and how the UI should react when the data changes.
+
+TanStack Query provides abstractions for handling many of these problems.
+
+## TanStack Query and Server State
+
+A useful way to understand TanStack Query is to think of it as a tool for managing the relationship between the frontend and server state.
+
+For example, imagine an application that displays a list of employees.
+
+```text
+Employees
+├── John
+├── Sarah
+└── Alex
+```
+
+The frontend requests this information from the backend and TanStack Query stores the result in its query cache.
+
+The application now has a cached representation of the server data.
+
+That cached data can be reused instead of making a new request every time the component renders or the user navigates around the application.
+
+This is where concepts such as `staleTime`, caching, refetching, mutations, and invalidation become important.
+
+## Understanding `staleTime`
+
+`staleTime` defines how long TanStack Query should consider fetched data to be fresh.
+
+For example:
+
+```ts
+useQuery({
+  queryKey: ["employees"],
+  queryFn: getEmployees,
+  staleTime: 5 * 60 * 1000,
+});
+```
+
+Here, the data is considered fresh for five minutes.
+
+After those five minutes, the data becomes **stale**.
+
+Stale does not mean that the data has been deleted from the cache. It simply means that TanStack Query no longer considers the cached data guaranteed to be up to date.
+
+The cached data can still be used by the application while TanStack Query determines whether it should fetch newer data.
+
+## Choosing a Suitable `staleTime`
+
+The appropriate `staleTime` depends on how frequently the underlying data changes.
+
+Some data changes very rarely.
+
+A list of countries, for example, probably does not need to be fetched repeatedly within a short period.
+
+For this type of data, a higher `staleTime` can reduce unnecessary network requests.
+
+```ts
+staleTime: 1000 * 60 * 60;
+```
+
+This keeps the data fresh for an hour.
+
+Other data can change frequently. A dashboard displaying constantly changing information may require a much shorter freshness period.
+
+The important idea is that `staleTime` should be based on the characteristics of the data rather than using the same value everywhere.
+
+```text
+Rarely changing data
+        ↓
+Higher staleTime
+        ↓
+Fewer unnecessary fetches
+
+
+Frequently changing data
+        ↓
+Lower staleTime
+        ↓
+More opportunities to refresh
+```
+
+## Cache and Freshness Are Different
+
+One of the concepts that initially confused me was the difference between cached data and fresh data.
+
+I used to think that once data became stale, it disappeared from the cache.
+
+That isn't how it works.
+
+The data can remain in the cache even after becoming stale.
+
+```text
+Cached Data
+    │
+    ├── Fresh
+    │
+    └── Stale
+```
+
+Freshness describes whether the cached data can currently be considered up to date.
+
+Caching describes whether the data is still available for reuse.
+
+This distinction is important because cached data can make applications feel much faster. Instead of always displaying an empty state while waiting for the server, the application can often display existing cached data while newer information is fetched.
+
+---
+
+# Queries and Mutations
+
+TanStack Query provides two important concepts for interacting with server state: **queries** and **mutations**.
+
+Queries are generally used for reading server data.
+
+```text
+GET employees
+GET profile
+GET documents
+GET departments
+```
+
+Mutations are generally used for changing server data.
+
+```text
+CREATE employee
+UPDATE employee
+DELETE employee
+SEND document
+CANCEL request
+```
+
+The simple mental model is:
+
+```text
+Query     → Read server state
+Mutation  → Change server state
+```
+
+The relationship between the two becomes especially important after a mutation.
+
+## What Happens After a Mutation
+
+Consider a document management application.
+
+The application initially loads:
+
+```text
+Document A
+Document B
+Document C
+```
+
+The data comes from:
+
+```text
+GET /documents
+```
+
+Now a user creates a new document.
+
+The frontend performs:
+
+```text
+POST /documents
+```
+
+The backend now contains:
+
+```text
+Document A
+Document B
+Document C
+Document D
+```
+
+However, the existing query cache may still contain:
+
+```text
+Document A
+Document B
+Document C
+```
+
+The backend has changed, but the cached representation in the frontend has not necessarily changed.
+
+This creates a synchronization problem.
+
+TanStack Query provides query invalidation to handle this situation.
+
+---
+
+# Mutation, Invalidation, and Refetching
+
+A common flow looks like this:
+
+```text
+Mutation
+   ↓
+Backend changes
+   ↓
+Related query is invalidated
+   ↓
+Query becomes stale
+   ↓
+Query refetches when appropriate
+   ↓
+Cache receives updated data
+   ↓
+UI displays updated information
+```
+
+For example:
+
+```ts
+const queryClient = useQueryClient();
+
+const createDocumentMutation = useMutation({
+  mutationFn: createDocument,
+
+  onSuccess: () => {
+    queryClient.invalidateQueries({
+      queryKey: ["documents"],
+    });
+  },
+});
+```
+
+The important part is:
+
+```ts
+queryClient.invalidateQueries({
+  queryKey: ["documents"],
+});
+```
+
+This tells TanStack Query that the cached data associated with the documents query may no longer represent the current server state.
+
+The query is marked as stale, and TanStack Query can refetch it when appropriate.
+
+The mutation changes the server state, while invalidation helps bring the frontend's server-state representation back in sync.
+
+---
+
+# Why Invalidation Is Useful
+
+It is possible to manage the UI manually after every mutation.
+
+For a simple application, we could maintain a local state:
+
+```ts
+setDocuments((previous) => [...previous, newDocument]);
+```
+
+This works when the application is small and the data exists in one place.
+
+As an application grows, the same server data may be displayed in many different parts of the UI.
+
+A document could appear in:
+
+- A dashboard
+- A document library
+- A sidebar
+- A search result
+- A recent activity section
+
+Manually keeping every representation synchronized can become difficult.
+
+Query invalidation provides a centralized way to communicate that a particular piece of server data may have changed.
+
+Instead of manually finding every component that might contain the old data, the application can invalidate the query responsible for that server state.
+
+TanStack Query can then handle the appropriate refetching behavior.
+
+---
+
+# The Relationship Between Queries and Mutations
+
+The overall relationship can be visualized like this:
+
+```text
+                    SERVER
+                       │
+                       │
+                 ┌─────▼─────┐
+                 │   Query   │
+                 │    Read   │
+                 └─────┬─────┘
+                       │
+                       ▼
+                  Query Cache
+                       │
+                       ▼
+                       UI
+
+
+Mutation ───────────► SERVER
+   │                    │
+   │                    │
+   └──── invalidate ────┘
+              │
+              ▼
+        Query becomes
+            stale
+              │
+              ▼
+           Refetch
+              │
+              ▼
+        Updated Cache
+              │
+              ▼
+               UI
+```
+
+This mental model helped me understand why queries and mutations are closely connected.
+
+A mutation changes server state.
+
+That change can make existing query data outdated.
+
+The mutation can therefore invalidate the queries that depend on the changed data.
+
+---
+
+# Understanding the Code Instead of Memorizing the API
+
+The most useful part of learning TanStack Query for me wasn't memorizing methods such as `invalidateQueries()`.
+
+It was understanding the reason behind them.
+
+When I see code like:
+
+```ts
+onSuccess: () => {
+  queryClient.invalidateQueries({
+    queryKey: documentsListKey,
+  });
+};
+```
+
+I can now understand what is happening conceptually.
+
+A mutation has changed something on the server. The documents list that is already cached in the frontend might no longer be accurate. The query is therefore marked as stale so TanStack Query can refresh the data when appropriate.
+
+This way of understanding the code is much more useful than simply remembering what the function does.
+
+It also makes it easier to work with unfamiliar codebases.
+
+---
+
+# The Questions That Come After the Basics
+
+Once the basic concepts became clear, more advanced areas of TanStack Query started making sense.
+
+The next concepts to explore include:
+
+- When an invalidated query actually refetches
+- The difference between `staleTime` and `gcTime`
+- Designing effective query keys
+- Using `setQueryData()` instead of invalidation
+- Optimistic updates
+- Updating cached data directly
+- Handling related queries after mutations
+- Automatic refetching behavior
+- Query prefetching
+- Dependent queries
+- Pagination and infinite queries
+
+These concepts become much easier to understand once the basic relationship between server state, cache, freshness, queries, and mutations is clear.
+
+---
+
+# My Mental Model
+
+My current mental model of TanStack Query looks like this:
+
+```text
+Server
+  │
+  ▼
+Queries ──────► Read server state
+  │
+  ▼
+Cache
+  │
+  ▼
+UI
+
+Mutations ────► Change server state
+  │
+  ▼
+Invalidate related queries
+  │
+  ▼
+Refresh stale data
+  │
+  ▼
+Updated Cache
+  │
+  ▼
+Updated UI
+```
+
+`staleTime` controls how long the cached data is considered fresh.
+
+Queries represent reading server state.
+
+Mutations represent changing server state.
+
+Invalidation tells TanStack Query that cached data may no longer be accurate.
+
+The cache allows previously fetched server data to be reused.
+
+Together, these concepts provide a structured way to keep the frontend synchronized with the backend.
+
+That is the point where TanStack Query stopped looking like just another package for making API calls and started looking like what it actually is: a system for managing **server state, caching, freshness, synchronization, and updates between the backend and the frontend**.
+
+The more important lesson for me is that learning a library isn't only about learning its APIs.
+
+It is about understanding the engineering problem behind the API.
+
+Once the problem is clear, the library's design starts to make much more sense.
