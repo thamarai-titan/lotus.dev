@@ -7,34 +7,34 @@ const PROJECT_DATA = [
     name: "chatapp",
     description:
       "A real-time messaging suite with instant chat rooms, live status, and responsive communication.",
-    url: "#",
+    url: "https://chat.ilotus.dev",
   },
   {
     id: 2,
     name: "devbin",
     description:
       "A curated discovery site for the most trending and essential developer tools in the ecosystem.",
-    url: "#",
+    url: "https://devbin.ilotus.dev",
   },
   {
     id: 3,
     name: "daivv.hr",
     description:
       "Modern HR management and workflow automation platform designed for scaling organizations.",
-    url: "#",
+    url: "https://daivv.hr",
   },
   {
     id: 4,
     name: "Hue",
     description: "Premium palettes, zero configuration.",
-    url: "#",
+    url: "https://hue.ilotus.dev",
   },
   {
     id: 5,
     name: "with-out-google",
     description:
       "Take back control of your data without sacrificing productivity. Discover the best independent alternatives.",
-    url: "#",
+    url: "https://nogoogle.ilotus.dev",
   },
 ];
 
@@ -48,6 +48,8 @@ export function Projects() {
           <a
             key={i}
             href={project.url}
+            target="_blank"
+            rel="noopener noreferrer"
             className="group flex items-start justify-between gap-4 p-3 -mx-3 rounded-lg border border-transparent hover:border-border/30 hover:bg-muted/30 transition-all duration-200 cursor-pointer"
           >
             <p className="text-base text-foreground/80 leading-relaxed font-normal text-justify">
