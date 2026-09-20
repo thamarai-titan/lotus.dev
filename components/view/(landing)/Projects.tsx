@@ -21,7 +21,7 @@ const PROJECT_DATA = [
     name: "daivv.hr",
     description:
       "Modern HR management and workflow automation platform designed for scaling organizations.",
-    url: "https://daivv.hr",
+    url: "https://daivv.com",
   },
   {
     id: 4,
