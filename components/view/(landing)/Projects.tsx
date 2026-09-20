@@ -4,23 +4,36 @@ import { IconArrowUpRight } from "@tabler/icons-react";
 const PROJECT_DATA = [
   {
     id: 1,
+    name: "chatapp",
+    description:
+      "A real-time messaging suite with instant chat rooms, live status, and responsive communication.",
+    url: "#",
+  },
+  {
+    id: 2,
     name: "devbin",
     description:
       "A curated discovery site for the most trending and essential developer tools in the ecosystem.",
     url: "#",
   },
   {
-    id: 2,
-    name: "openchat",
+    id: 3,
+    name: "daivv.hr",
     description:
-      "A real-time messaging suite featuring AI-powered summaries to catch you up on unread group activity instantly.",
+      "Modern HR management and workflow automation platform designed for scaling organizations.",
     url: "#",
   },
   {
-    id: 3,
-    name: "easyride",
+    id: 4,
+    name: "Hue",
+    description: "Premium palettes, zero configuration.",
+    url: "#",
+  },
+  {
+    id: 5,
+    name: "with-out-google",
     description:
-      "A curated discovery site for the most trending and essential developer tools in the ecosystem.",
+      "Take back control of your data without sacrificing productivity. Discover the best independent alternatives.",
     url: "#",
   },
 ];

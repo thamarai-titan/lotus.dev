@@ -1,5 +1,6 @@
 import { Header } from "@/components/view/(landing)/Header";
 import { Projects } from "@/components/view/(landing)/Projects";
+import { Skills } from "@/components/view/(landing)/Skills";
 import { Links } from "@/components/view/(landing)/Links";
 
 export default function Page() {
@@ -10,6 +11,7 @@ export default function Page() {
 
         <div className="flex flex-col gap-6">
           <Projects />
+          <Skills />
         </div>
         <Links />
       </div>
