@@ -36,6 +36,13 @@ const PROJECT_DATA = [
       "Take back control of your data without sacrificing productivity. Discover the best independent alternatives.",
     url: "https://nogoogle.ilotus.dev",
   },
+  {
+    id: 6,
+    name: "ReadmeForge",
+    description:
+      "AI-driven repository intelligence that inspects your GitHub file tree and generates structured, badge-rich READMEs in seconds.",
+    url: "https://readme.ilotus.dev",
+  },
 ];
 
 export function Projects() {
