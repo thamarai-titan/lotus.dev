@@ -1,4 +1,6 @@
-import { getPostData } from "@/lib/content";
+import type { Metadata } from "next";
+import { getPostData, getSortedPostsData } from "@/lib/content";
+
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Separator } from "@/components/ui/separator";
@@ -9,6 +11,50 @@ interface Props {
   }>;
 }
 
+export function generateStaticParams() {
+  const posts = getSortedPostsData("blogs");
+  return posts.map((post) => ({
+    slug: post.slug,
+  }));
+}
+
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params;
+  const post = await getPostData("blogs", slug);
+
+  if (!post) {
+    return {
+      title: "Blog Not Found",
+    };
+  }
+
+  const title = post.title;
+  const description = post.description || `${post.title} - by Thamarai Manalan`;
+  const url = `https://www.ilotus.dev/blogs/${encodeURIComponent(slug)}`;
+
+  return {
+    title,
+    description,
+    alternates: {
+      canonical: `/blogs/${encodeURIComponent(slug)}`,
+    },
+    openGraph: {
+      title,
+      description,
+      type: "article",
+      publishedTime: post.date,
+      authors: ["Thamarai Manalan"],
+      url,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+    },
+  };
+}
+
 export default async function BlogPostPage({ params }: Props) {
   const { slug } = await params;
   const post = await getPostData("blogs", slug);
@@ -17,8 +63,28 @@ export default async function BlogPostPage({ params }: Props) {
     notFound();
   }
 
+  const articleJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: post.title,
+    description: post.description,
+    datePublished: post.date,
+    author: {
+      "@type": "Person",
+      name: "Thamarai Manalan",
+      url: "https://www.ilotus.dev",
+    },
+    url: `https://www.ilotus.dev/blogs/${encodeURIComponent(slug)}`,
+  };
+
   return (
-    <main className="flex min-h-screen justify-center p-6 md:p-16 pb-24">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+      />
+      <main className="flex min-h-screen justify-center p-6 md:p-16 pb-24">
+
       <div className="w-full max-w-[640px] space-y-6">
         <Link
           href="/blogs"
@@ -45,6 +111,8 @@ export default async function BlogPostPage({ params }: Props) {
           dangerouslySetInnerHTML={{ __html: post.contentHtml }}
         />
       </div>
-    </main>
+      </main>
+    </>
   );
 }
+

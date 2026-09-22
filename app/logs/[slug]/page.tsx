@@ -1,4 +1,6 @@
-import { getPostData } from "@/lib/content";
+import type { Metadata } from "next";
+import { getPostData, getSortedPostsData } from "@/lib/content";
+
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Separator } from "@/components/ui/separator";
@@ -7,6 +9,50 @@ interface Props {
   params: Promise<{
     slug: string;
   }>;
+}
+
+export function generateStaticParams() {
+  const logs = getSortedPostsData("logs");
+  return logs.map((log) => ({
+    slug: log.slug,
+  }));
+}
+
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params;
+  const log = await getPostData("logs", slug);
+
+  if (!log) {
+    return {
+      title: "Log Not Found",
+    };
+  }
+
+  const title = log.title;
+  const description = log.description || `${log.title} - Dev log by Thamarai Manalan`;
+  const url = `https://www.ilotus.dev/logs/${encodeURIComponent(slug)}`;
+
+  return {
+    title,
+    description,
+    alternates: {
+      canonical: `/logs/${encodeURIComponent(slug)}`,
+    },
+    openGraph: {
+      title,
+      description,
+      type: "article",
+      publishedTime: log.date,
+      authors: ["Thamarai Manalan"],
+      url,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+    },
+  };
 }
 
 export default async function LogPostPage({ params }: Props) {
@@ -19,6 +65,7 @@ export default async function LogPostPage({ params }: Props) {
 
   return (
     <main className="flex min-h-screen justify-center p-6 md:p-16 pb-24">
+
       <div className="w-full max-w-[640px] space-y-6">
         <Link
           href="/logs"

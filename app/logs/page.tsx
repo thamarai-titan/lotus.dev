@@ -1,9 +1,26 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import BlogHeader from "@/components/view/(blogs)/BlogHeader";
 import { getSortedPostsData } from "@/lib/content";
 import { Separator } from "@/components/ui/separator";
 
+export const metadata: Metadata = {
+  title: "Dev Logs",
+  description:
+    "Daily dev logs, updates, and learnings on software engineering by Thamarai Manalan.",
+  alternates: {
+    canonical: "/logs",
+  },
+  openGraph: {
+    title: "Dev Logs | Thamarai Manalan",
+    description:
+      "Daily dev logs, updates, and learnings on software engineering by Thamarai Manalan.",
+    url: "https://www.ilotus.dev/logs",
+  },
+};
+
 export default function LogsPage() {
+
   const logs = getSortedPostsData("logs");
 
   return (
