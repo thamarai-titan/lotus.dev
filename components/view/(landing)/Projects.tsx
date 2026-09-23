@@ -31,10 +31,10 @@ const PROJECT_DATA = [
   },
   {
     id: 5,
-    name: "with-out-google",
+    name: "k-base",
     description:
-      "Take back control of your data without sacrificing productivity. Discover the best independent alternatives.",
-    url: "https://nogoogle.ilotus.dev",
+      "A personal knowledge base for commands, notes, and code snippets across any technical domain.",
+    url: "https://kbase.ilotus.dev",
   },
   {
     id: 6,
@@ -42,6 +42,13 @@ const PROJECT_DATA = [
     description:
       "AI-driven repository intelligence that inspects your GitHub file tree and generates structured, badge-rich READMEs in seconds.",
     url: "https://readme.ilotus.dev",
+  },
+  {
+    id: 7,
+    name: "with-out-google",
+    description:
+      "Take back control of your data without sacrificing productivity. Discover the best independent alternatives.",
+    url: "https://nogoogle.ilotus.dev",
   },
 ];
 
